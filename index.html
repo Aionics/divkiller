@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
+	<style>
+		body {
+			background: #111;
+		}
+		p {
+			color: white;
+		}
+	</style>
     <head>
         <meta charset="utf-8">
     </head>
     <body>
     	<p id="score">Score: </p>
+    	<!-- <button onclick="stopPause();" id="clickMe" style="border: 1px dashed black; padding: 2px; display: inline-block; position: absolute">Pause</button> -->
+    	<p id="score" style="display: inline-block; position: absolute">Press any keybutton to pause (ESC for example).</p>
         <canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
     </body>
         <script type="text/javascript" src="sas.js"></script>

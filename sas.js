@@ -5,6 +5,7 @@ var field = {
 	'sizeX': window.innerWidth - 30,
 	'sizeY': window.innerHeight - 30
 }
+var running = new Boolean(1);
 var elastic = 30;
 var mass = 1.9;
 var score = 0;
@@ -14,6 +15,16 @@ scoreLabel.style.position = 'absolute';
 scoreLabel.style.left = '90%';
 
 document.onmousemove = handleMouseMove;
+document.onkeydown = stopPause;
+// $("clickMe").click(
+// 	function () {
+// 		stopPause();
+// 	}
+// );
+
+function stopPause(event) {
+	running = !running;
+}
 
 function removeAllEnemies() {
 	for (var type2 in enemies){
@@ -133,7 +144,8 @@ var oldPos = {
 	'y': follower.pos.y
 };
 function main() {
-
+	
+	if(running == 1) {
 		if ( Math.floor(Math.random() * 80) == 0){
 			var newEnt = new entity(1, 20, 'lightgrey');
 			var pos = {
@@ -147,56 +159,55 @@ function main() {
 			enemies['default'].push(newEnt);
 		}
 
-	for (var i in cursor) {
-		follower.direction[i] = newPos[i]-oldPos[i];
-		newPos[i] =  follower.pos[i] +  ( (cursor[i] - follower.pos[i])/elastic  + follower.direction[i]*mass) /2;
-	}
+		for (var i in cursor) {
+			follower.direction[i] = newPos[i]-oldPos[i];
+			newPos[i] =  follower.pos[i] +  ( (cursor[i] - follower.pos[i])/elastic  + follower.direction[i]*mass) /2;
+		}
 
-	for (var y in enemies['default']) {
-		enemies['default'][y].setPos( add(enemies['default'][y].pos, multiply(enemies['default'][y].direction, enemies['default'][y].speed)) );
-	}
- 
-	for (var type in enemies){
-		for (var u in enemies[type]){
-			if( range(pointer.pos, enemies[type][u].pos) <= (pointer.size+enemies[type][u].size)/1.4){
-				console.log(enemies[type][u] + ' - ' + u);
-				removeAllEnemies();
-				alert('You get REKT, your score is ' + score + '!');
-				score = 0;
-			}
-			else if( range(follower.pos, enemies[type][u].pos) <= (follower.size+enemies[type][u].size)/1.4){ 
-				score++
-				scoreLabel.innerHTML = 'Score: ' + score;
-				enemies[type][u].removeElement();
-				enemies[type].splice(u, 1);
-				console.log(enemies[type][u] + ' - ' + u);
-			}
-			else if(enemies[type][u].pos.x >= field.sizeX || enemies[type][u].pos.x <= 0 || enemies[type][u].pos.y >= field.sizeY || enemies[type][u].pos.y <= 0){
-				enemies[type][u].removeElement();
-				enemies[type].splice(u, 1);
+		for (var y in enemies['default']) {
+			enemies['default'][y].setPos( add(enemies['default'][y].pos, multiply(enemies['default'][y].direction, enemies['default'][y].speed)) );
+		}
+	 
+		for (var type in enemies){
+			for (var u in enemies[type]){
+				if( range(pointer.pos, enemies[type][u].pos) <= (pointer.size+enemies[type][u].size)/1.4){
+					console.log(enemies[type][u] + ' - ' + u);
+					removeAllEnemies();
+					alert('You get REKT, your score is ' + score + '!');
+					score = 0;
+				}
+				else if( range(follower.pos, enemies[type][u].pos) <= (follower.size+enemies[type][u].size)/1.4){ 
+					score++
+					scoreLabel.innerHTML = 'Score: ' + score;
+					enemies[type][u].removeElement();
+					enemies[type].splice(u, 1);
+					console.log(enemies[type][u] + ' - ' + u);
+				}
+				else if(enemies[type][u].pos.x >= field.sizeX || enemies[type][u].pos.x <= 0 || enemies[type][u].pos.y >= field.sizeY || enemies[type][u].pos.y <= 0){
+					enemies[type][u].removeElement();
+					enemies[type].splice(u, 1);
+				}
 			}
 		}
-	}
-
-
-
 		// newPos.x = cursor.x + Math.round((cursor.x - follower.pos.x)/20);
-	field = {
-		'sizeX': window.innerWidth - 30,
-		'sizeY': window.innerHeight - 30
-	}
-	sas.width = field.sizeX;
-	sas.height = field.sizeY;
-	if(cursor.x){
-		oldPos = follower.pos;
-		follower.setPos(newPos);
-		pointer.setPos(cursor);
+		field = {
+			'sizeX': window.innerWidth - 30,
+			'sizeY': window.innerHeight - 30
+		}
+		sas.width = field.sizeX;
+		sas.height = field.sizeY;
+		if(cursor.x){
+			oldPos = follower.pos;
+			follower.setPos(newPos);
+			pointer.setPos(cursor);
 
-		// ctx.clearRect(0,0,500,500);
-		ctx.beginPath();
-		ctx.moveTo(follower.pos.x,follower.pos.y);
-		ctx.lineTo(pointer.pos.x,pointer.pos.y);
-		ctx.stroke();  
+			// ctx.clearRect(0,0,500,500);
+			ctx.beginPath();
+			ctx.moveTo(follower.pos.x,follower.pos.y);
+			ctx.lineTo(pointer.pos.x,pointer.pos.y);
+			ctx.stroke();  
+		}
+
 	}
 }
 
