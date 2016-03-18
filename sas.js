@@ -13,7 +13,6 @@ var scoreLabel = document.getElementById("score");
 scoreLabel.style.position = 'absolute';
 scoreLabel.style.left = '90%';
 
-
 document.onmousemove = handleMouseMove;
 
 function removeAllEnemies() {
