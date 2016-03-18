@@ -1,0 +1,85 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300,700,100italic,300italic,400italic,700italic,900,900italic);
+
+body {
+	/*background: #111;*/
+	background: #ddd;
+  /*color: white;*/
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.menu {
+  	background: #ddd;
+  	margin: 0;
+  	font-family: "Lato", sans-serif;
+  	font-size: 16px;
+  	line-height: 1.5;
+  	text-align: center;
+  	text-rendering: optimizeLegibility;
+    position: absolute;
+    display: inline-block;
+}
+
+.tips {
+
+}
+
+.menu h2 {
+  margin: 0 0 2rem;
+  font-weight: 300;
+  color: #666;
+}
+
+.menu .button {
+  text-align: center;
+  display: inline-block;
+  background: #e05851;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  border: 3px solid #333;
+  box-shadow: 2px 2px 0 #fff inset, 5px 5px 0 transparent;
+  position: relative;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+.menu .button:hover {
+  background: #dc433b;
+  box-shadow: 2px 2px 0 #fff inset, 5px 5px 0 rgba(0, 0, 0, 0.1);
+}
+.menu .button:active {
+  box-shadow: 0 0 0 #fff inset, 0 0 0 transparent;
+  -webkit-transform: translate(2px, 2px);
+          transform: translate(2px, 2px);
+}
+.menu .button:before, .button:after {
+  content: ' ';
+  position: absolute;
+}
+.menu .button:before {
+  top: 0;
+  bottom: 0;
+  right: 2rem;
+  border-right: 2px solid #333;
+}
+.menu .button:after {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-top: 3px solid #333;
+  border-right: 3px solid #333;
+  top: 50%;
+  right: 0.8rem;
+  -webkit-transform: translate(0, -50%) rotate(47deg) skew(4deg);
+          transform: translate(0, -50%) rotate(47deg) skew(4deg);
+  border-radius: 0 2px 0 0;
+}

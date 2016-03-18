@@ -16,11 +16,6 @@ scoreLabel.style.left = '90%';
 
 document.onmousemove = handleMouseMove;
 document.onkeydown = stopPause;
-// $("clickMe").click(
-// 	function () {
-// 		stopPause();
-// 	}
-// );
 
 function stopPause(event) {
 	running = !running;
@@ -123,26 +118,16 @@ var a = {
 follower.setPos( a );
 pointer.setPos( a );
 
-// for (var i = 0; i < 5; i++) {
-// 	enemies[i] = new entity(i, 20);
-// 	var pos = {
-// 		'x': Math.floor(Math.random() * (window.innerWidth-50 - 0 + 1)) + 0,
-// 		'y': Math.floor(Math.random() * (window.innerHeight-50 - 0 + 1)) + 0
-// 	}
-// 	enemies[i].setPos(pos);
-// 	enemies[i].direction = normalize(vector(pointer.pos, pos));
-// 	enemies[i].speed = 0;
-// }
-
-
 var newPos = {
 	'x': follower.pos.x,
 	'y': follower.pos.y
 };
+
 var oldPos = {
 	'x': follower.pos.x,
 	'y': follower.pos.y
 };
+
 function main() {
 	
 	if(running == 1) {
