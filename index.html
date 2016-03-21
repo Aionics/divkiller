@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="sassy.css">
+        <title>Flamecursor</title>
+        <link rel="stylesheet" type="text/css" href="jess.css">
+        <!-- <script type="text/javascript" scr="amandine.js"></script> -->
     </head>
     <body>
-        <div class="screen">
-            <div class="menu">
-                <p id="score">Score: </p>
-                <span class="tips">Press any keybutton to pause (ESC for example).</span>
-                <a class='button'>
-                    Restart
-                </a>
+        <div class="game">
+            <div class="tips">
+                <h2>Press any key to pause ("ESC" for the best).</h2>
             </div>
-            <div class="game" id="gamesquare">
-                <canvas id="myCanvas" style="border:1px solid #d3d3d3;">
-            </div>
+            <canvas id="myCanvas"></canvas>
         </div>
+        <script src="amandine.js"></script>
     </body>
-    <script type="text/javascript" src="sas.js"></script>
 </html>

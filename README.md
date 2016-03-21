@@ -1,4 +1,4 @@
-Lights to come:
+Lights to come (check):
 http://codepen.io/jackrugile/pen/Jbnpv
 
 Some buttons too:
