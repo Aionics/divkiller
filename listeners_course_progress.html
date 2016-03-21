@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--==============================>>  Head Start  <<=================================-->
+    <head>
+        <title>course</title>
+        <meta name = "format-detection" content = "telephone=no" />
+        <meta charset="utf-8">
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+        <script src="js/jquery-2.1.3.min.js"></script>
+        <script src="js/jquery-migrate-1.2.1.min.js"></script>
+
+        <style>
+            .follow_me {
+                /*padding-top: 10px !important;*/
+            }
+            .pinkcodification {
+                font-weight: bold;
+            }
+            .dottedlink {
+                display: inline;
+                border-bottom: 1px dotted;
+            }
+            .dottedlink:hover {
+                border-bottom: 1px dotted transparent;
+            }
+            .second_menu_link span[data-circleabs="circle_min"]:before {
+                right: -8px;
+                top: 8px;
+                left: initial;
+            }
+            [data-circleabs="circle_min"]:before {
+                width: 6px;
+                height: 6px;
+                background-color: #e91e63;
+                top: 7px;
+                left: 7px;
+                position: absolute;
+                content: "";
+                -webkit-border-radius: 50%;
+                border-radius: 50%;
+            }
+            .menu_link{
+                min-width: 155px;
+                position: relative;
+            }
+            .circa {
+                position: absolute;
+                top: 4px;
+                right: 4px;
+            }
+            .circle-mod {
+                float: right;
+                width: 20px;
+                height: 20px;
+                line-height: 100%;
+                -webkit-border-radius: 50%;
+                border-radius: 50%;
+                overflow: hidden;
+                /*text-align: center;*/
+                background-color: #e91e63;
+                color: #FFF;
+                /*display: inline-block;*/
+            }
+            .circle-mod .texted {
+                height: 60%;
+                margin-right: auto;
+                margin-left: auto;
+                margin-top: 20%;
+                font-size: 13px;
+            }
+            textarea:disabled { 
+                background-color: #F2F2F2;
+            }
+           .circle-mod:hover {
+            /*                              
+                border: 2px solid #fff;
+                width: 22px;
+                height: 22px;
+                margin-top: 6px;
+                margin: 10px 69px 11px 0;
+                width: 28px;
+                height: 28px;
+            */
+            }
+            .robofont {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .res_per_small {
+                font-size: 13px;
+                line-height: 1.3;
+            }
+
+            .tablet {
+                display: table;
+                position: absolute;
+            }
+
+            .courses_listener_item .title1 {
+                margin-bottom: 7px;
+            }
+
+            .courses_listener_captions {
+                padding: 16px 20px 15px 20px;
+                display: table-cell;
+                float: left;
+            }
+
+            .courses_listener_rating {
+                width: 120px;
+                text-align: center;
+                float: right;
+                /*padding: 10px 20px 0px 20px;*/
+                padding: 0;
+
+            }
+
+            .figure_container {
+                padding: 0;
+            }
+
+            .rating_main {
+                font-size: 30px;
+                font-weight: 500;
+            }
+
+            .rating_status {
+                color: #90A4AE;
+                font-size: 16px;
+                display: table-cell;
+                vertical-align: middle;
+                position: relative;
+            }
+
+        </style>
+        <script>
+            // Hide the attach and send buttons after pressing "send".
+            function sendReply() {
+                document.getElementById('myTextarea').disabled = true;
+                var sendingPanel = document.getElementById('sendPanel');
+                sendingPanel.remove();
+
+                var checkLabel = document.getElementById('checkInProcess');
+                checkLabel.style.display = 'inline-block';
+            }
+        </script>
+    </head>
+<!--==============================>>  Head End    <<=================================-->
+
+
+<!--==============================>>  Body Start  <<=================================-->
+    <body>
+        <!--==============================>>  Header Start  <<=================================-->
+        <header id="header" class="header_container">
+            <section class="container">
+                <div class="row">
+                    <div class="col-xs-8">
+
+                        <div class="logo">
+                            <a href="index.html">Доктор на учёбе</a>
+                        </div>
+
+                        <nav id="primary_nav" class="navigation_menu">
+                            <ul class="menu clearfix">
+                                <li class="menu_item current2">
+                                    <a class="menu_link" href="index.html">Мои курсы</a>
+                                </li>
+                                <li class="menu_item">
+                                    <a class="menu_link" href="index2.html">
+                                       Мои задания
+                                        <div class="circle-mod circa">
+                                            <div class="circle-mod texted">99</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="menu_item">
+                                    <a class="menu_link" href="video_lection.html">
+                                        Сообщения
+                                        <div class="circle-mod circa">
+                                            <div class="circle-mod texted">9</div>
+                                        </div>
+                                    </a>
+                                </li>
+                              </ul>
+                        </nav>
+
+                        <div class="user_container_enter">
+                            <div class="user_name_logo">
+                                <img class="user_logo_icon" src="images/icon/user_logo_icon.png" alt="">
+                                Купельский Артём
+                                <a class="user_profile_link" href="profile.html"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </header>
+        <!--==============================>>  Header End    <<=================================-->
+
+
+        <!--==============================>>  Content Start  <<=================================-->
+        <article id="content" class="content_container" data-bg-img="bg_img">
+
+            <section class="container course_container_on_bg">
+                    <div class="row">
+                        <div class="col-xs-6">
+
+                            <div class="clearfix val_mid mb26">
+                                <span><a href="#" class="return_link val_mid">Назад</a></span>
+                                <span class="period_date white val_mid">Дек 2, 2015 – Дек 31, 2015</span>
+                                <span class="amount_people white val_mid">168</span>
+                            </div>
+
+                            <h2 class="title2 mb28 white">Вопросы профпатологии и организации профилактических<br> медицинских осмотров</h2>
+
+                            <div class="clearfix course_main_menu">
+                                <ul id="second_menu" class="second_menu clearfix">
+                                    <li class="second_menu_item current"><a class="second_menu_link" href="#">Расписание</a></li>
+                                    <li class="second_menu_item"><a class="second_menu_link" href="#">Успеваемость</a></li>
+                                    <li class="second_menu_item"><a class="second_menu_link" href="#">Участники</a></li>
+                                    <li class="second_menu_item"><a class="second_menu_link" href="#">Обсуждения</a></li>
+                                    <li class="second_menu_item"><a class="second_menu_link" href="#">Информация</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+            </section>
+
+            <section class="container course_filter_and_redaction_container">
+                <div class="row">
+                    <div class="col-xs-2">
+
+                        <aside class="filter_aside">
+
+                            <div class="container_filter_box">
+
+                                <!-- <a href="#" class="link_developments" data-developments="develop_icon">Отфильтровать события</a> -->
+                            </div>
+                            
+                        </aside>
+                    </div>
+
+                    <div class="col-xs-6">
+                        
+                        <div class="tabs tabs_main_container course_tabs p_rel">
+
+                            <section class="courses_listener">
+                                    
+                                <figure class="courses_listener_item figure_container">
+                                    <a class="full_abs" href="#"></a>
+                                    <figcaption class="clearfix courses_listener_info">
+                                        <div class="f_left courses_listener_captions">
+                                            <h2 class="title1">
+                                                <b>Тестовое задание №12 -</b> Рентгенодиагностика опухолей и кист средостения.
+                                            </h2>
+                                            <span class="result_percent res_per_small robofont">Сдано: </span>
+                                            <span class="result_percent res_per_small">10 Января 2016</span>
+                                        </div>
+                                        <div class="courses_listener_info courses_listener_rating">
+                                            <span class="robofont result_percent res_per_small rating_main">20</span>
+                                            <div class="result_percent res_per_small">
+                                                <span>10/18</span>
+                                                <span> верно</span>
+                                            </div>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+
+                                <figure class="courses_listener_item figure_container">
+                                    <a class="full_abs" href="#"></a>
+                                    <figcaption class="clearfix courses_listener_info tablet">
+                                        <div class="f_left courses_listener_captions">
+                                            <h2 class="title1">
+                                                <b>Практическое задание №3 -</b> Рентгенодиагностика опухолей и кист средостения.
+                                            </h2>
+                                            <span class="result_percent res_per_small robofont">Сдано: </span>
+                                            <span class="result_percent res_per_small">02 Января 2016</span>
+                                        </div>
+                                        <div class="courses_listener_info courses_listener_rating" >
+                                            <span class="robofont result_percent res_per_small rating_status gray">Ожидает оценки</span>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+
+                                <figure class="courses_listener_item">
+                                    <a class="full_abs" href="#"></a>
+                                    <h2 class="title1">Вопросы профпатологии и организации профилактических медицинских осмотров</h2>
+                                    <figcaption class="clearfix courses_listener_info">
+                                        <div class="f_left">
+                                            <span class="result_percent roboto_bd green">11/15</span>
+                                            <span class="result_text gray">заданий сдано</span>
+                                        </div>
+                                        <div class="result_current roboto_med f_right gray">Прошедший</div>
+                                    </figcaption>
+                                </figure>
+                                    
+                            </section>
+                        </div>
+
+                    </div>
+
+                </div>
+            </section>
+
+        </article>
+        <!--==============================>>  Content End    <<=================================-->
+
+
+        <!--==============================>>  Footer Start  <<=================================-->
+        <footer id="footer" class="footer_container">
+            <section class="container">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="clearfix">
+
+                            <div class="f_left">
+                                <div class="copyright_box">@ Copyright Доктор на учёбе 2015</div>
+                            </div>
+                            <div class="f_right">
+                                <div class="site_developer">Сайт разработан<br> компанией JetStyle</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </footer>
+        <!--==============================>>  Footer End    <<=================================-->
+
+
+        <!-- POPUP START ============================================ -->
+        <div class="d_none">
+
+            <div class="arcticmodal_container_box" id="add_event">
+
+                <div class="arcticmodal-close">&times;</div>
+                <h2 class="title2 roboto_med">Добавление события</h2>
+
+                <div class="textafield_container mb26">
+                    <label class="label_field roboto_med mb10">Название события</label>
+                    <input class="text_field" type="text" placeholder="Введите название события">
+                </div>
+
+                <div class="clearfix edit_event_boxes_it">
+
+                    <div class="datepicker_box f_left">
+                        <label class="label_field roboto_med mb10">Дата</label>
+                        <div class="p_rel">
+                            <input type="text" id="datepicker" class="datepicker" placeholder="10 Дек, 2015">
+                            <span class="date_icon"></span>
+                        </div>
+                    </div>
+
+                    <div class="textafield_container f_left ml10">
+                        <label class="label_field roboto_med mb10">Время</label>
+                        <input class="text_field styler" type="time">
+                    </div>
+
+                    <div class="selectbox_container f_right">
+                        <label class="label_field roboto_med mb10">Название видеолекции</label>
+                        <select  class="styler select_box roboto_reg" data-placeholder="Выберите тип">
+                            <option value="">Выберите тип</option>
+                            <option value="">Выберите тип2</option>
+                            <option value="">Выберите тип3</option>
+                            <option value="">Выберите тип4</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="button_container">
+                    <button class="btn_pink">сохранить</button>
+                    <a class="cancel_link" href="#">Отмена</a>
+                </div>
+
+            </div>
+        </div>
+        <!-- POPUP END ============================================ -->
+
+        <!-- Scripts Include Libs & Plugins START
+        ============================================ -->
+        <script src="js/wingart.js"></script>
+        <script src="js/initialize_plugins.js"></script>
+        
+        <!-- Scripts Include Libs & Plugins END
+        ============================================ -->
+    </body>
+    <!--==============================>>  Body End    <<=================================-->
+
+</html>

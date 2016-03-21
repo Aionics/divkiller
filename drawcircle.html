@@ -5,6 +5,7 @@
       body {
         margin: 0px;
         padding: 0px;
+        background: #111; 
       }
     </style>
   </head>
@@ -15,11 +16,29 @@
 
       var canvas = document.getElementById('myCanvas');
       var context = canvas.getContext('2d');
+      
       var centerX = canvas.width / 2;
       var centerY = canvas.height / 2;
+
+      var cw = centerX;
+      var ch = centerY;
+
+      // Particle count handling
+      var parts = [];
+      var partCount = 200;  
+      var partsFull = false;   
+
+      var hueRange = 50;
+      var globalTick = 0;
+
+      var rand = function(min, max) {
+          return Math.floor( (Math.random() * (max - min + 1) ) + min);
+      };
+
       var radius = 70;
 
       var running = new Boolean(1); // play-pause switch
+      var partsFull = false;
 
       // Controllers (event handlers)
       canvas.addEventListener("mousemove", changeCoords);
@@ -33,6 +52,9 @@
           
           centerX = event.clientX;
           centerY = event.clientY;
+
+          cw = event.clientX;
+          ch = event.clientY;
       }
 
       function resizeScreen(event) {
@@ -44,25 +66,131 @@
           running = !running;
       }
 
+      function drawTheFCircle() {
+          context.beginPath();
+          context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+          context.fillStyle = '#FFB224';
+          context.fill();
+          context.closePath();
+          context.lineWidth = 5;
+          context.strokeStyle = 'yellow';
+          context.stroke();
+      }
+
       // View renderer -----
+
       function screenDraw() {
-          if(running) {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.beginPath();
-            context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-            context.fillStyle = 'green';
-            context.fill();
-            context.closePath();
-            context.lineWidth = 5;
-            context.strokeStyle = '#003300';
-            context.stroke();
-            console.log("r_ok");
+          if(1) {
+              // context.clearRect(0, 0, canvas.width, canvas.height);
+              drawTheFCircle();
+              // console.log("r_ok");
           }
       }
 
       setInterval(screenDraw, 1000 / 60); // 60 fps drawing
+
       // renderer end -----
 
+      var Part = function(){
+          this.reset();
+      };
+
+      Part.prototype.reset = function(){
+          this.startRadius = rand(1, 35); // particle size limit
+          this.radius = this.startRadius;
+          this.x = cw/2 + (rand(0, 6) - 3);
+          this.y = ch - 50;      
+          this.vx = 0;
+          this.vy = 0;
+          this.hue = rand(globalTick - hueRange, globalTick + hueRange);
+          this.saturation = rand(50, 100);
+          this.lightness = rand(20, 70);
+          this.startAlpha = rand(1, 10) / 100;
+          this.alpha = this.startAlpha;
+          this.decayRate = .1;  
+          this.startLife = 7;
+          this.life = this.startLife;
+          this.lineWidth = rand(1, 5);
+      }
+        
+      Part.prototype.update = function() {  
+          this.vx += (rand(0, 200) - 100) / 1500;
+          this.vy -= this.life/50;  
+          this.x += this.vx;
+          this.y += this.vy;  
+          this.alpha = this.startAlpha * (this.life / this.startLife);
+          this.radius = this.startRadius * (this.life / this.startLife);
+          this.life -= this.decayRate;  
+          if(
+              this.x > cw + this.radius || 
+              this.x < -this.radius ||
+              this.y > ch + this.radius ||
+              this.y < -this.radius ||
+              this.life <= this.decayRate
+          ) this.reset();  
+      };
+  
+      Part.prototype.render = function(){
+          context.beginPath();
+          context.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+          context.fillStyle = context.strokeStyle = 'hsla('+this.hue+', '+this.saturation+'%, '+this.lightness+'%, '+this.alpha+')';
+          context.lineWidth = this.lineWidth;
+          context.fill();
+          context.stroke();
+      };
+
+      var createParts = function(){
+          if(!partsFull) {
+              if(parts.length > partCount){
+                  partsFull = true;
+              } else {
+                  parts.push(new Part()); 
+              }
+          }
+      };
+
+      var updateParts = function() {
+          var i = parts.length;
+          while(i--) {
+              parts[i].update();
+          }
+      };
+
+      var renderParts = function() {
+          var i = parts.length;
+          while(i--) {
+              parts[i].render();
+          }   
+      };
+  
+      var clear = function(){
+          context.globalCompositeOperation = 'destination-out';
+          context.fillStyle = 'hsla(0, 0%, 0%, .3)';
+          context.fillRect(0, 0, cw, ch);
+          context.globalCompositeOperation = 'lighter';
+      };
+   
+      var loop = function(){
+          window.requestAnimFrame(loop, canvas);
+
+          //clear();
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          createParts();
+          updateParts();
+          renderParts();
+          globalTick++;
+          if (globalTick == 350) globalTick=0;
+      };
+
+      window.requestAnimFrame = function() {
+          return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(a) {
+                window.setTimeout(a,1E3/60)
+            }
+      }();
+
+      loop();
+
     </script>
+
   </body>
 </html>      
