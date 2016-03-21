@@ -136,6 +136,9 @@ var pointer = new entity(1002, 25, 'blue');
 var enemies = {
 	'default': [],
 	'boost': [],
+	'splinter': [],
+	'splinter-shrapnel': [],
+
 };
 var a = {
 	x: 100,
@@ -165,9 +168,7 @@ var oldPos = {
 	'y': follower.pos.y
 };
 function main() {
-		it++;
-		console.log(it);
-		if ( Math.floor(Math.random() * 200) == 0){
+		if ( Math.floor(Math.random() * 450) == 0){
 			var newEnt = new entity(1, 20, 'green');
 			var pos = enemySpawnPos()
 			newEnt.setPos(pos);
@@ -175,12 +176,12 @@ function main() {
 			newEnt.speed = 1.5;
 			enemies['default'].push(newEnt);
 		}
-		if ( Math.floor(Math.random() * 400) == 0){
-			var newEnt = new entity(1, 20, 'lightgrey');
+		if ( Math.floor(Math.random() * 450) == 0){
+			var newEnt = new entity(1, 15, 'lightgrey');
 			var pos = enemySpawnPos()
 			newEnt.setPos(pos);
 			newEnt.direction = normalize(vector(pointer.pos, pos));
-			newEnt.speed = 1.5;
+			newEnt.speed = 2;
 			newEnt.boost = {
 				'currnetTime': 0,
 				'boostTime': Math.floor(Math.random() * 250) + 150,
@@ -188,15 +189,37 @@ function main() {
 			}
 			enemies['boost'].push(newEnt);
 		}
+		if ( Math.floor(Math.random() * 250) == 0){
+			var newEnt = new entity(1, 25, 'orange');
+			var pos = enemySpawnPos()
+			newEnt.setPos(pos);
+			newEnt.direction = normalize(vector(pointer.pos, pos));
+			newEnt.speed = 1;
+			newEnt.die = function (pos) {
+				setTimeout(function(){
+					for (var i = 0; i < 4; i++) {
+						var subEnt = new entity(1, 10, 'orange');
+						subEnt.setPos(pos);
+						subEnt.direction = normalize( {'x':Math.random() - 0.5, 'y':Math.random() - 0.5} );
+						subEnt.speed = 4;
+						enemies['splinter-shrapnel'].push(subEnt);
+					};
+				}, 65);
+			}
+			enemies['splinter'].push(newEnt);
+		}
 
 	for (var i in cursor) {
 		follower.direction[i] = newPos[i]-oldPos[i];
 		newPos[i] =  follower.pos[i] +  ( (cursor[i] - follower.pos[i])/elastic  + follower.direction[i]*mass) /2;
 	}
 
+	// default-enemies
 	for (var y in enemies['default']) {
 		enemies['default'][y].setPos( add(enemies['default'][y].pos, multiply(enemies['default'][y].direction, enemies['default'][y].speed)) );
 	}
+
+	// boost-enemies 
 	for (var y in enemies['boost']) {
 		if (enemies['boost'][y].boost.phase < 2){
 			enemies['boost'][y].boost.currnetTime++;
@@ -205,17 +228,28 @@ function main() {
 			enemies['boost'][y].boost.phase = 1;
 			enemies['boost'][y].changeColor('yellow');
 		}
-		if (enemies['boost'][y].boost.currnetTime == (enemies['boost'][y].boost.boostTime + 50)) {
-			enemies['boost'][y].speed = 5;
+		if (enemies['boost'][y].boost.currnetTime == (enemies['boost'][y].boost.boostTime + 40)) {
+			enemies['boost'][y].boost.currnetTime++;
+			enemies['boost'][y].speed = 7;
 			enemies['boost'][y].direction = normalize(vector(pointer.pos, enemies['boost'][y].pos));
 			enemies['boost'][y].boost.phase = 2;
-			enemies['boost'][y].boost.currnetTime++;
 		}
 		if (enemies['boost'][y].boost.phase == 0 || enemies['boost'][y].boost.phase == 2){
 			enemies['boost'][y].setPos( add(enemies['boost'][y].pos, multiply(enemies['boost'][y].direction, enemies['boost'][y].speed)) );
 		}
 	}
- 
+	// splinter-enemies
+	for (var y in enemies['splinter']) {
+		enemies['splinter'][y].setPos( add(enemies['splinter'][y].pos, multiply(enemies['splinter'][y].direction, enemies['splinter'][y].speed)) );
+		if( range(follower.pos, enemies['splinter'][y].pos) <= (follower.size+enemies['splinter'][y].size)/1.4){
+			enemies['splinter'][y].die(enemies['splinter'][y].pos);
+		}
+	}
+	for (var y in enemies['splinter-shrapnel']) {
+		enemies['splinter-shrapnel'][y].setPos( add(enemies['splinter-shrapnel'][y].pos, multiply(enemies['splinter-shrapnel'][y].direction, enemies['splinter-shrapnel'][y].speed)) );
+	}
+
+
 	for (var type in enemies){
 		for (var u in enemies[type]){
 			if( range(pointer.pos, enemies[type][u].pos) <= (pointer.size+enemies[type][u].size)/1.4){
