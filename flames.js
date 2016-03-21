@@ -7,7 +7,7 @@ var c = document.getElementById('myCanvas'),
     partsFull = false,    
     hueRange = 50,
     globalTick = 0,
-    rand = function(min, max){
+    rand = function(min, max) {
         return Math.floor( (Math.random() * (max - min + 1) ) + min);
     };
 

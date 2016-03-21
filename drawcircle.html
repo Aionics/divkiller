@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="draw()">Pause</button>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var centerX = canvas.width / 2;
+      var centerY = canvas.height / 2;
+      var radius = 70;
+
+      var running = new Boolean(1); // play-pause switch
+
+      // Controllers (event handlers)
+      canvas.addEventListener("mousemove", changeCoords);
+      // canvas.onmousemove = changeCoords;
+      window.onresize = resizeScreen;
+      document.onkeydown = pausePlay;
+
+      function changeCoords(event) {
+          event = event || window.event; // (*)
+          // Теперь event - объект события во всех браузерах.
+          
+          centerX = event.clientX;
+          centerY = event.clientY;
+      }
+
+      function resizeScreen(event) {
+        // field.sizeX = positionInfo.width;
+        // field.sizeY = positionInfo.height;
+      }
+
+      function pausePlay(event) {
+          running = !running;
+      }
+
+      // View renderer -----
+      function screenDraw() {
+          if(running) {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+            context.fillStyle = 'green';
+            context.fill();
+            context.closePath();
+            context.lineWidth = 5;
+            context.strokeStyle = '#003300';
+            context.stroke();
+            console.log("r_ok");
+          }
+      }
+
+      setInterval(screenDraw, 1000 / 60); // 60 fps drawing
+      // renderer end -----
+
+    </script>
+  </body>
+</html>      

@@ -1,21 +1,32 @@
 
 var it = 0;
 var cursor = {};
+
+var gamearea = document.getElementById('gamesquare');
+var positionInfo = gamearea.getBoundingClientRect();
+var varheight = positionInfo.height;
+var varwidth = positionInfo.width;
+
 var field = {
-	'sizeX': window.innerWidth - 30,
-	'sizeY': window.innerHeight - 30
+	'sizeX': varheight - 30,
+	'sizeY': varwidth - 30
 }
-var running = new Boolean(1);
+
+var running = new Boolean(1);	// play-pause switch
 var elastic = 30;
 var mass = 1.9;
 var score = 0;
-document.body.style.cursor = 'none';
 var scoreLabel = document.getElementById("score");
-scoreLabel.style.position = 'absolute';
-scoreLabel.style.left = '90%';
 
-document.onmousemove = handleMouseMove;
+// Events handlers
+gamearea.onmousemove = handleMouseMove;
+window.onresize = resizeScreen;
 document.onkeydown = stopPause;
+
+function resizeScreen(event) {
+	field.sizeX = positionInfo.width;
+	field.sizeY = positionInfo.height;
+};
 
 function stopPause(event) {
 	running = !running;
@@ -44,6 +55,7 @@ function vector (pos1, pos2){
 	}
 	return vec;
 }
+
 function normalize( vec ){
 	var module = Math.sqrt( Math.pow(vec.x, 2) + Math.pow(vec.y, 2));
 	var vec2 = {
@@ -52,9 +64,11 @@ function normalize( vec ){
 	} 
 	return vec2;
 }
+
 function range(vec1, vec2){
 	return Math.sqrt(Math.pow((vec2.x - vec1.x), 2) + Math.pow((vec2.y - vec1.y), 2));
 }
+
 function multiply (vec, number){
 	var vec2 = {
 		'x': vec.x * number,
@@ -62,6 +76,7 @@ function multiply (vec, number){
 	}
 	return vec2;
 }
+
 function add (vec1, vec2){
 	var vec3 = {
 		'x': vec1.x + vec2.x,
@@ -70,6 +85,7 @@ function add (vec1, vec2){
 	return vec3;
 }
 
+// 
 function entity(id, size, color) {
 	this.id = id;
 	this.size = size;
@@ -92,29 +108,35 @@ function entity(id, size, color) {
 			'y': pos.y
 		};
 	}
+
 	this.removeElement = function () {
 		document.body.removeChild(this.element);
 		return false;
 	}
+
 	this.changeColor = function(color) {
 		this.element.style.border =  color + ' solid ' + Math.round(this.size*0.2) + 'px';
 	}
 }
 
+// Defining painting context
 var sas = document.getElementById("myCanvas");
 var ctx = sas.getContext("2d");
 
-var follower = new entity(1001, 18, 'red');
-var pointer = new entity(1002, 25, 'blue');
+// Main pair - player's circles.
+var follower = new entity(1001, 18, 'red');	// orbit moon
+var pointer = new entity(1002, 25, 'blue');	// blackhole attractor
 
 var enemies = {
 	'default': [],
 	'fast': [],
 };
+
 var a = {
 	x: 100,
 	y: 100
 }
+
 follower.setPos( a );
 pointer.setPos( a );
 
@@ -129,7 +151,6 @@ var oldPos = {
 };
 
 function main() {
-	
 	if(running == 1) {
 		if ( Math.floor(Math.random() * 80) == 0){
 			var newEnt = new entity(1, 20, 'lightgrey');
@@ -174,13 +195,15 @@ function main() {
 				}
 			}
 		}
-		// newPos.x = cursor.x + Math.round((cursor.x - follower.pos.x)/20);
+
 		field = {
-			'sizeX': window.innerWidth - 30,
-			'sizeY': window.innerHeight - 30
+			'sizeX': varheight - 30,
+			'sizeY': varwidth - 30
 		}
+
 		sas.width = field.sizeX;
 		sas.height = field.sizeY;
+
 		if(cursor.x){
 			oldPos = follower.pos;
 			follower.setPos(newPos);
@@ -192,8 +215,7 @@ function main() {
 			ctx.lineTo(pointer.pos.x,pointer.pos.y);
 			ctx.stroke();  
 		}
-
 	}
 }
 
-var gameTick = setInterval(main, 1000 / 60);
+setInterval(main, 1000 / 60);
