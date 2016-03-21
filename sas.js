@@ -15,6 +15,38 @@ scoreLabel.style.left = '90%';
 
 document.onmousemove = handleMouseMove;
 
+function enemySpawnPos () {
+	var pos = {};
+	var side = Math.floor(Math.random() * 4)
+	switch (side){
+		case 0:
+			pos = {
+				'x': Math.random() * (field.sizeX),
+				'y': 30
+			}
+			break
+		case 1:
+			pos = {
+				'x': field.sizeX - 30,
+				'y': Math.random() * (field.sizeY)
+			}
+			break		
+		case 2:
+			pos = {
+				'x': Math.random() * (field.sizeX),
+				'y': field.sizeY - 30
+			}
+			break
+		case 3:
+			pos = {
+				'x': 30,
+				'y': Math.random() * (field.sizeY)
+			}
+			break		
+	}
+	return pos;
+}
+
 function removeAllEnemies() {
 	for (var type2 in enemies){
 		for (var u2 in enemies[type2]){
@@ -103,7 +135,7 @@ var pointer = new entity(1002, 25, 'blue');
 
 var enemies = {
 	'default': [],
-	'fast': [],
+	'boost': [],
 };
 var a = {
 	x: 100,
@@ -133,18 +165,28 @@ var oldPos = {
 	'y': follower.pos.y
 };
 function main() {
-
-		if ( Math.floor(Math.random() * 80) == 0){
-			var newEnt = new entity(1, 20, 'lightgrey');
-			var pos = {
-				'x': Math.random() * (field.sizeX),
-				'y': Math.random() * (field.sizeY)
-			}
+		it++;
+		console.log(it);
+		if ( Math.floor(Math.random() * 200) == 0){
+			var newEnt = new entity(1, 20, 'green');
+			var pos = enemySpawnPos()
 			newEnt.setPos(pos);
 			newEnt.direction = normalize(vector(pointer.pos, pos));
-			newEnt.speed = 2;
-			newEnt.changeColor('green');
+			newEnt.speed = 1.5;
 			enemies['default'].push(newEnt);
+		}
+		if ( Math.floor(Math.random() * 400) == 0){
+			var newEnt = new entity(1, 20, 'lightgrey');
+			var pos = enemySpawnPos()
+			newEnt.setPos(pos);
+			newEnt.direction = normalize(vector(pointer.pos, pos));
+			newEnt.speed = 1.5;
+			newEnt.boost = {
+				'currnetTime': 0,
+				'boostTime': Math.floor(Math.random() * 250) + 150,
+				'phase': 0
+			}
+			enemies['boost'].push(newEnt);
 		}
 
 	for (var i in cursor) {
@@ -155,13 +197,33 @@ function main() {
 	for (var y in enemies['default']) {
 		enemies['default'][y].setPos( add(enemies['default'][y].pos, multiply(enemies['default'][y].direction, enemies['default'][y].speed)) );
 	}
+	for (var y in enemies['boost']) {
+		if (enemies['boost'][y].boost.phase < 2){
+			enemies['boost'][y].boost.currnetTime++;
+		}
+		if (enemies['boost'][y].boost.currnetTime == enemies['boost'][y].boost.boostTime){
+			enemies['boost'][y].boost.phase = 1;
+			enemies['boost'][y].changeColor('yellow');
+		}
+		if (enemies['boost'][y].boost.currnetTime == (enemies['boost'][y].boost.boostTime + 50)) {
+			enemies['boost'][y].speed = 5;
+			enemies['boost'][y].direction = normalize(vector(pointer.pos, enemies['boost'][y].pos));
+			enemies['boost'][y].boost.phase = 2;
+			enemies['boost'][y].boost.currnetTime++;
+		}
+		if (enemies['boost'][y].boost.phase == 0 || enemies['boost'][y].boost.phase == 2){
+			enemies['boost'][y].setPos( add(enemies['boost'][y].pos, multiply(enemies['boost'][y].direction, enemies['boost'][y].speed)) );
+		}
+	}
  
 	for (var type in enemies){
 		for (var u in enemies[type]){
 			if( range(pointer.pos, enemies[type][u].pos) <= (pointer.size+enemies[type][u].size)/1.4){
-				console.log(enemies[type][u] + ' - ' + u);
+				// console.log(enemies[type][u] + ' - ' + u);
 				removeAllEnemies();
-				alert('You get REKT, your score is ' + score + '!');
+				setTimeout(function(){
+					alert('You get REKT, your score is ' + score + '!');
+					}, 1000);
 				score = 0;
 			}
 			else if( range(follower.pos, enemies[type][u].pos) <= (follower.size+enemies[type][u].size)/1.4){ 
@@ -169,7 +231,7 @@ function main() {
 				scoreLabel.innerHTML = 'Score: ' + score;
 				enemies[type][u].removeElement();
 				enemies[type].splice(u, 1);
-				console.log(enemies[type][u] + ' - ' + u);
+				// console.log(enemies[type][u] + ' - ' + u);
 			}
 			else if(enemies[type][u].pos.x >= field.sizeX || enemies[type][u].pos.x <= 0 || enemies[type][u].pos.y >= field.sizeY || enemies[type][u].pos.y <= 0){
 				enemies[type][u].removeElement();
