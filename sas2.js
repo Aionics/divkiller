@@ -1,7 +1,26 @@
 function Vec(x, y){  //class vector
     this.x = x;
     this.y = y;
+    var self = this;
+    this.addition= function (vec){    
+        self.x += vec.x;
+        self.y += vec.y;
+        return self;
+    };
+    this.subtract = function (vec){
+        self.x -= vec.x;
+        self.y -= vec.y;
+        return self;
+    };
+    this.multiply = function(number){
+        self.x *= number;
+        self.y *= number;
+        return self;
+    };
 }
+
+Vec.prototype
+
 
 function entity(size, spawnPos, color){ // entity cretae constructor
     this.pos = spawnPos;
@@ -23,7 +42,7 @@ function entity(size, spawnPos, color){ // entity cretae constructor
         context.fill();
     };
 }
-function background(x, y, width, height)
+function background(x, y, width, height) 
 {
     this.x = x;
     this.y = y;
@@ -43,25 +62,39 @@ function handleMouseMove(event) {
 
 function update() {
     pointer.setPos(cursor);
+    follower.oldPos = follower.pos;
+    var ad = (subtract = function subtract(vec1, vec2){
+    // console.log(vec1.x + '   -   '+ vec2.x)
+    var vec3 = new Vec(
+        vec1.x - vec2.x,
+        vec1.y - vec2.y
+    );
+    return vec3
+}(cursor, follower.pos)).multiply(0.03);
+    console.log(ad);
+    follower.pos = addition(follower.pos, ad)
 }
 function draw() {
     game.draw();
     pointer.draw();
 }
-function main() // рисуем на холсте
+function main()
 {   
     // it++
-//     if(it%100 == 1){
-//         console.log(pointer);
+    // if(it%100 == 1){
+    //     console.log(pointer);
     //  }
     draw();
     update();
 }
 
 var it = 0;
+
 var game = new background(0, 0, 480, 320); // прямоугольник закрашивающий фон
-var pointer = new entity(20, new Vec(50, 50), 'blue'); // шар
 var cursor;
+
+var pointer = new entity(15, new Vec(50, 50), 'blue'); // шар
+var follower = new entity(20, new Vec(50, 50), 'red');
 
 document.onmousemove = handleMouseMove;
 
